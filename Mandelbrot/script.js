@@ -182,7 +182,7 @@ function screenToFractal(x, y, rect, zoomCenter, zoomSize){
 canvas.addEventListener("touchmove",(e)=>{
     if (e.touches.length == 1){
         dragEvent(e);
-    } else if (e.touches.length > 1) {
+    } else if (e.touches.length == 2) {
         e.preventDefault();
         lockC = !lockC
         if (lockC){
@@ -200,6 +200,7 @@ canvas.addEventListener("touchmove",(e)=>{
             const after = screenToFractal(midX, midY, rect, zoomCenter, zoomSize);
             zoomCenter[0]+=before[0]-after[0];
             zoomCenter[1]+=before[1]-after[1];
+            
         }
         lastTouchDistance = dist;
     }
