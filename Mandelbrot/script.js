@@ -184,6 +184,12 @@ canvas.addEventListener("touchmove",(e)=>{
         dragEvent(e);
     } else if (e.touches.length == 2) {
         e.preventDefault();
+        lockC = !lockC
+        if (lockC){
+            lockCbtn.innerText = "Unlock C";
+        } else {
+            lockCbtn.innerText = "Lock C";
+        }
         const dist = Math.sqrt((e.touches[0].clientX-e.touches[1].clientX)**2+(e.touches[0].clientY-e.touches[1].clientY)**2)
         if (lastTouchDistance != null){
             const rect = canvas.getBoundingClientRect();
