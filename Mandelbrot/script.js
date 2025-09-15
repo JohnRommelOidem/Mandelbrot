@@ -182,7 +182,7 @@ function screenToFractal(x, y, rect, zoomCenter, zoomSize){
 canvas.addEventListener("touchmove",(e)=>{
     if (e.touches.length == 1){
         dragEvent(e);
-    } else if (e.touches.length == 2) {
+    } else if (e.touches.length > 2) {
         e.preventDefault();
         lockC = !lockC
         if (lockC){
@@ -196,7 +196,7 @@ canvas.addEventListener("touchmove",(e)=>{
             const midX = (e.touches[0].clientX+e.touches[1].clientX)/2-rect.left;
             const midY = (e.touches[0].clientY+e.touches[1].clientY)/2-rect.top;
             const before = screenToFractal(midX, midY, rect, zoomCenter, zoomSize);
-            zoomSize =Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, zoomSize*lastTouchDistance/dist));
+            zoomSize = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, zoomSize*lastTouchDistance/dist));
             const after = screenToFractal(midX, midY, rect, zoomCenter, zoomSize);
             zoomCenter[0]+=before[0]-after[0];
             zoomCenter[1]+=before[1]-after[1];
