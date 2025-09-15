@@ -87,6 +87,7 @@ var lastX = 0;
 var lastY = 0;
 var initialZoom;
 var lockC = false;
+var lastTouchDistance = null;
 const MIN_ZOOM = 0.00001;
 const MAX_ZOOM = 3;
 const CENTER_X_BOUNDS = [-3.0, 1.0];
@@ -163,7 +164,6 @@ lockCbtn.addEventListener("click", ()=>{
 })
 //TODO: Add touch zoom functionality, Add a reset button;
 canvas.addEventListener("touchstart", (e)=>{
-    console.log(e.touches.length);
     clickEvent(e);
     document.body.style.overscrollBehavior = "contain";
 }, {passive:false})
@@ -173,4 +173,28 @@ canvas.addEventListener("touchend", (e)=>{
     document.body.style.overscrollBehavior = "";
 }, {passive:false});
 
-canvas.addEventListener("touchmove",dragEvent, {passive:false});
+function screenToFractal(x, y, rect, zoomCenter, zoomSize){
+    return [
+        zoomCenter[0] + (x/rect.width-0.75)*zoomSize*canvas.width/canvas.height,
+        zoomCenter[1]+(1-y/rect.height-0.5)*zoomSize
+    ]
+}
+canvas.addEventListener("touchmove",(e)=>{
+    if (e.touches.length == 1){
+        dragEvent(e);
+    } else if (e.touches.length == 2) {
+        e.preventDefault();
+        const dist = Math.sqrt((e.touches[0].clientX-e.touches[1].clientX)**2+(e.touches[0].clientY-e.touches[1].clientY)**2)
+        if (lastTouchDistance != null){
+            const rect = canvas.getBoundingClientRect();
+            const midX = (e.touches[0].clientX+e.touches[1].clientX)/2-rect.left;
+            const midY = (e.touches[0].clientY+e.touches[1].clientY)/2-rect.left;
+            const before = screenToFractal(midX, midY, rect, zoomCenter, zoomSize);
+            zoomSize =Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, zoomSize/scale));
+            const after = screenToFractal(midX, midY, rect, zoomCenter, zoomSize);
+            zoomCenter[0]+=before[0]-after[0];
+            zoomCenter[1]+=before[1]-after[1];
+        }
+        lastTouchDistance = dist;
+    }
+}, {passive:false});
