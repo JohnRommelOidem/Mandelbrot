@@ -171,9 +171,7 @@ canvas.addEventListener("touchstart", (e)=>{
 canvas.addEventListener("touchend", (e)=>{
     releaseEvent(e);
     document.body.style.overscrollBehavior = "";
-    if (e.touches.length<2){
-        lastTouchDistance = null;
-    }
+    lastTouchDistance = null;
 }, {passive:false});
 
 function screenToFractal(x, y, rect, zoomCenter, zoomSize){
