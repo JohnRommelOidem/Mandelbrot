@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mandelbrot Set</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="mandelbrot-canvas"></canvas>
+  <canvas id="julia-canvas"></canvas>
+  <div id="slider-container">
+    <label for="picker-1">Primary: <input type="color" id="picker-1"></label>
+    <label for="picker-2">Secondary: <input type="color" id="picker-2"></label>
+    <button id="lock-c" class="locker">Lock C</button>
+    <button id="lock-z0" class="locker">Unlock Z0</button>
+  </div>
+  <script type='module' src="Mandelbrot/script.js"></script>
+  <script type='module' src="Julia/script.js"></script>
+  <script type='module' src="sharedState.js"></script>
+</body>
+</html>
