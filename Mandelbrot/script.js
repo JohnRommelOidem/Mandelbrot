@@ -171,6 +171,9 @@ canvas.addEventListener("touchstart", (e)=>{
 canvas.addEventListener("touchend", (e)=>{
     releaseEvent(e);
     document.body.style.overscrollBehavior = "";
+    if (e.touches.length<2){
+        lastTouchDistance = null;
+    }
 }, {passive:false});
 
 function screenToFractal(x, y, rect, zoomCenter, zoomSize){
@@ -194,7 +197,6 @@ canvas.addEventListener("touchmove",(e)=>{
             const after = screenToFractal(midX, midY, rect, zoomCenter, zoomSize);
             zoomCenter[0]+=before[0]-after[0];
             zoomCenter[1]+=before[1]-after[1];
-            
         }
         lastTouchDistance = dist;
     }
