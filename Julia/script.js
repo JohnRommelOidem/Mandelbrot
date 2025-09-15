@@ -177,7 +177,7 @@ canvas.addEventListener("touchend", (e)=>{
 
 function screenToFractal(x, y, rect, zoomCenter, zoomSize){
     return [
-        zoomCenter[0] + (x/rect.width-0.75)*zoomSize*canvas.width/canvas.height,
+        zoomCenter[0] + (x/rect.width-0.5)*zoomSize*canvas.width/canvas.height,
         zoomCenter[1] + (1-y/rect.height-0.5)*zoomSize
     ]
 }
