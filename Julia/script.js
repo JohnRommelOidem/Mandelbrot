@@ -100,7 +100,7 @@ function clickEvent(e){
     [lastX, lastY] = getClientCoords(e);
     const rect = canvas.getBoundingClientRect();
     if (
-        Math.sqrt((lastX-rect.left-cursorPosition[0])**2+(canvas.height-(lastY-rect.top)-cursorPosition[1])**2)<=5*2&&!lockZ0
+        Math.sqrt((lastX-rect.left-cursorPosition[0])**2+(canvas.height-(lastY-rect.top)-cursorPosition[1])**2)<=5*5&&!lockZ0
     ){
         isDraggingCursor=true;
         canvas.style.cursor = "none"

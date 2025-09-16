@@ -101,7 +101,7 @@ function clickEvent(e){
     [lastX, lastY] = getClientCoords(e);
     const rect = canvas.getBoundingClientRect();
     if (
-        Math.sqrt((lastX-rect.left-cursorPosition[0])**2+(canvas.height-(lastY-rect.top)-cursorPosition[1])**2)<=5*2&&!lockC
+        Math.sqrt((lastX-rect.left-cursorPosition[0])**2+(canvas.height-(lastY-rect.top)-cursorPosition[1])**2)<=5*5&&!lockC
     ){
         isDraggingCursor=true;
         canvas.style.cursor = "none"
@@ -162,7 +162,7 @@ lockCbtn.addEventListener("click", ()=>{
         lockCbtn.innerText = "Lock C";
     }
 })
-//TODO: Add touch zoom functionality, Add a reset button;
+//TODO: Add a reset button,  hide panel;
 canvas.addEventListener("touchstart", (e)=>{
     clickEvent(e);
     document.body.style.overscrollBehavior = "contain";
