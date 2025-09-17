@@ -216,13 +216,13 @@ canvas.addEventListener("touchmove",(e)=>{
         if (lastTouchDistance != null){
             const rect = canvas.getBoundingClientRect();
             const midPoint = [
-                (e.touches[0].clientX+e.touches[1].clientX)/2-rect.left,
-                (e.touches[0].clientY+e.touches[1].clientY)/2-rect.top
+                ((e.touches[0].clientX+e.touches[1].clientX)/2-rect.left)/rect.width,
+                ((e.touches[0].clientY+e.touches[1].clientY)/2-rect.top)/rect.height
             ]
             const offSet = [0.75, 0.5]
-            const before = clientToComplex(midPoint, rect, offSet, uniforms.u_zoomCenter.value, uniforms.u_zoomSize.value);
+            const before = canvasToComplex(midPoint, offSet, uniforms.u_zoomCenter.value, uniforms.u_zoomSize.value);
             uniforms.u_zoomSize.value = clamp(uniforms.u_zoomSize.value*lastTouchDistance/dist, MIN_ZOOM, MAX_ZOOM);
-            const after = clientToComplex(midPoint, rect, offSet, uniforms.u_zoomCenter.value, uniforms.u_zoomSize.value);
+            const after = canvasToComplex(midPoint, offSet, uniforms.u_zoomCenter.value, uniforms.u_zoomSize.value);
             uniforms.u_zoomCenter.value[0]+=before[0]-after[0];
             uniforms.u_zoomCenter.value[1]+=before[1]-after[1];
         }
