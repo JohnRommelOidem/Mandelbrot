@@ -104,8 +104,8 @@ function drawScene(){
     initScene();
     if (!uniforms.u_lockC.value){
         state.juliaC = [
-            uniforms.u_zoomCenter.value[0]+(cursorPosition[0]/canvas.width-0.75)*uniforms.u_zoomSize.value*canvas.width/canvas.height,
-            uniforms.u_zoomCenter.value[1]+(cursorPosition[1]/canvas.height-0.5)*uniforms.u_zoomSize.value
+            uniforms.u_zoomCenter.value[0]+(uniforms.u_cursorPoint.value[0]/canvas.width-0.75)*uniforms.u_zoomSize.value*canvas.width/canvas.height,
+            uniforms.u_zoomCenter.value[1]+(uniforms.u_cursorPoint.value[1]/canvas.height-0.5)*uniforms.u_zoomSize.value
         ]
     }
     requestAnimationFrame(drawScene);
@@ -120,7 +120,7 @@ function clickEvent(e){
     [lastX, lastY] = getClientCoords(e);
     const rect = canvas.getBoundingClientRect();
     if (
-        Math.sqrt((lastX-rect.left-cursorPosition[0])**2+(canvas.height-(lastY-rect.top)-cursorPosition[1])**2)<=5*5&&!uniforms.u_lockC.value
+        Math.sqrt((lastX-rect.left-uniforms.u_cursorPoint.value[0])**2+(canvas.height-(lastY-rect.top)-uniforms.u_cursorPoint.value[1])**2)<=5*5&&!uniforms.u_lockC.value
     ){
         isDraggingCursor=true;
         canvas.style.cursor = "none"
@@ -148,8 +148,8 @@ function dragEvent(e){
         uniforms.u_zoomCenter.value[1] = clamp(uniforms.u_zoomCenter.value[1], minCenter[1], maxCenter[1]);
         [lastX, lastY] = getClientCoords(e);
     } else if (isDraggingCursor){
-        cursorPosition[0] = (clientX-rect.left);
-        cursorPosition[1] = rect.height-(clientY-rect.top);
+        uniforms.u_cursorPoint.value[0] = (clientX-rect.left);
+        uniforms.u_cursorPoint.value[1] = rect.height-(clientY-rect.top);
     }
 }
 
