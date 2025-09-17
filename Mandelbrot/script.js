@@ -100,6 +100,11 @@ function clientToComplex(clientCoords, rect, [offSetX, offSetY], zoomCenter, zoo
 }
 
 function drawScene(){
+    uniforms.u_color1.value = state.color1;
+    uniforms.u_color2.value = state.color2;
+    uniforms.u_maxIterations.value = state.maxIter;
+    uniforms.u_escapeRadius.value = state.escapeRadius;
+    uniforms.u_colorPeriod.value = state.colorPeriod;
     uniforms.u_mandelbrotPoint.value = state.mandelbrotZ0;
     initScene();
     if (!uniforms.u_lockC.value){
