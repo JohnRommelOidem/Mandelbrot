@@ -1,6 +1,10 @@
+const startValue = 0.2;
+const endValue = 3;
+const duration = 900;
+
 export const state = {
     iterations:500,
-    escapeRadius:3,
+    escapeRadius:startValue,
     maxIter:500,
     colorPeriod:50,
     color2:[0.8, 0.45, 0.3],
@@ -48,14 +52,17 @@ function createSlider(sliderDetails, sliderFunction){
         sliderFunction(e);
     });
     label.style.display="flex";
-    label.style.flexDirection="column"
+    label.style.flexDirection="column";
     sliderContainer.appendChild(label);
+    return [slider, text];
 }
 
-createSlider({name:"Iterations", min:2, max:5000, value:state.maxIter, step:1}, (e)=>{
+
+
+createSlider({name:"Iterations", min:2, max:3000, value:state.maxIter, step:1}, (e)=>{
     state.maxIter = e.target.valueAsNumber;
 })
-createSlider({name:"Escape Radius", min:0.2, max:4, value:state.escapeRadius, step:0.1}, (e)=>{
+const [escapeSlider, escapeText] = createSlider({name:"Escape Radius", min:0.2, max:4, value:state.escapeRadius, step:0.1}, (e)=>{
     state.escapeRadius = e.target.valueAsNumber;
 })
 createSlider({name:"Color Period", min:20, max:100, value:state.colorPeriod, step:1}, (e)=>{
@@ -107,3 +114,21 @@ if (window.innerHeight>window.innerWidth){
     mandelbrotCanvas.style.width = "50vw";
     mandelbrotCanvas.style.height = "100vh";
 }
+
+let startTime = null;
+
+function animateEscape(timestamp){
+    if (!startTime) startTime = timestamp;
+    const elapsed = timestamp - startTime;
+    const t = Math.min(elapsed/duration, 1);
+    const value = startValue+t*(endValue-startValue);
+    escapeSlider.value = value;
+    state.escapeRadius = value;
+    escapeText.innerText = `Escape Radius:${value.toFixed(1)}`;
+    if (t<1){
+        requestAnimationFrame(animateEscape);
+        console.log("asdf");
+    }
+}
+
+requestAnimationFrame(animateEscape);
