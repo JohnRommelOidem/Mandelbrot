@@ -4,6 +4,7 @@ import {initGl} from '../shaderUtils.js'
 import {state} from '../sharedState.js'
 
 const canvas = document.getElementById("mandelbrot-canvas");
+const lockCbtn = document.getElementById("lock-c");
 
 canvas.width = canvas.clientWidth;
 canvas.height = canvas.clientHeight;
@@ -76,17 +77,8 @@ const uniforms = {
 
 const initScene = initGl(canvas, uniforms, vertexShaderSource, fragmentShaderSource);
 
-const lockCbtn = document.getElementById("lock-c");
-
 drawScene();
 canvas.style.opacity = "1";
-
-function screenToFractal(clientCoords, offSet, rect, zoomCenter, zoomSize){
-    return [
-        zoomCenter[0] + (clientCoords[0]/rect.width-offSet[x])*zoomSize*canvas.width/canvas.height,
-        zoomCenter[1] + (1-clientCoords[1]/rect.height-offSet[y])*zoomSize
-    ]
-}
 
 function clientToCanvas([clientX, clientY], rect){
     return[
