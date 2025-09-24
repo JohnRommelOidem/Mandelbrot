@@ -74,3 +74,7 @@ export function initGl(canvas, uniforms, vertexShaderSource, fragmentShaderSourc
     }
     return canvas, initScene;    
 }
+
+export function clamp(value, min, max){
+    return Math.max(min, Math.min(max, value))
+}

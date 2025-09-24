@@ -46,7 +46,9 @@ canvas {
     top:0;
     right:0;
     animation: slideIn 0.3s ease forwards;
-    opacity: 0.5;
+    opacity: 0.8;
+    width:10rem;
+    border-radius: 0.5rem;
 }
 
 @keyframes slideIn {

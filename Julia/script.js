@@ -1,6 +1,6 @@
 import vertexShaderSource from './vertexShader.js';
 import fragmentShaderSource from './fragmentShader.js';
-import {initGl} from '../shaderUtils.js'
+import {initGl, clamp} from '../shaderUtils.js'
 import {state} from '../sharedState.js'
 
 const canvas = document.getElementById("julia-canvas");
@@ -44,7 +44,7 @@ const uniforms = {
     },
     u_maxIterations:{
         type: "1i",
-        value: state.maxIter
+        value: state.iterations
     },
     u_colorPeriod:{
         type: "1i",
@@ -103,7 +103,7 @@ function clientToComplex(clientCoords, rect, [offSetX, offSetY], zoomCenter, zoo
 function drawScene(){
     uniforms.u_color1.value = state.color1;
     uniforms.u_color2.value = state.color2;
-    uniforms.u_maxIterations.value = state.maxIter;
+    uniforms.u_maxIterations.value = state.iterations;
     uniforms.u_escapeRadius.value = state.escapeRadius;
     uniforms.u_colorPeriod.value = state.colorPeriod;
     uniforms.u_juliaPoint.value = state.juliaC;
@@ -134,10 +134,6 @@ function clickEvent(e){
         isDraggingCanvas=true;
         canvas.style.cursor = "grabbing";
     }
-}
-
-function clamp(value, min, max){
-    return Math.max(min, Math.min(max, value))
 }
 
 

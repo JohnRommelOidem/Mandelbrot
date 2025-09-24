@@ -1,6 +1,6 @@
 import vertexShaderSource from './vertexShader.js';
 import fragmentShaderSource from './fragmentShader.js';
-import {initGl} from '../shaderUtils.js'
+import {initGl, clamp} from '../shaderUtils.js'
 import {state} from '../sharedState.js'
 
 const canvas = document.getElementById("mandelbrot-canvas");
@@ -9,7 +9,7 @@ const lockCbtn = document.getElementById("lock-c");
 canvas.width = canvas.clientWidth;
 canvas.height = canvas.clientHeight;
 
-var zoomCenter = [0, 0];
+var zoomCenter = [-0.12, 0];
 var zoomSize = 2.5;
 var cursorPosition = [canvas.width/2, canvas.height/2];
 var isDraggingCanvas = false;
@@ -43,7 +43,7 @@ const uniforms = {
     },
     u_maxIterations:{
         type: "1i",
-        value: state.maxIter
+        value: state.iterations
     },
     u_colorPeriod:{
         type: "1i",
@@ -102,7 +102,7 @@ function clientToComplex(clientCoords, rect, [offSetX, offSetY], zoomCenter, zoo
 function drawScene(){
     uniforms.u_color1.value = state.color1;
     uniforms.u_color2.value = state.color2;
-    uniforms.u_maxIterations.value = state.maxIter;
+    uniforms.u_maxIterations.value = state.iterations;
     uniforms.u_escapeRadius.value = state.escapeRadius;
     uniforms.u_colorPeriod.value = state.colorPeriod;
     uniforms.u_mandelbrotPoint.value = state.mandelbrotZ0;
@@ -134,11 +134,6 @@ function clickEvent(e){
         canvas.style.cursor = "grabbing";
     }
 }
-
-function clamp(value, min, max){
-    return Math.max(min, Math.min(max, value))
-}
-
 
 function dragEvent(e){
     e.preventDefault();
